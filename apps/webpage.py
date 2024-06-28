@@ -2,7 +2,7 @@ from flask import Flask, render_template, Response, stream_with_context
 import json
 import time
 from typing import Iterator
-import recognitioncv 
+import apps.recognitioncv as recognitioncv 
 
 app = Flask(__name__)
 
