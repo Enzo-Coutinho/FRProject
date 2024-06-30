@@ -14,7 +14,7 @@ haar_file=cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
 face_cascade=cv2.CascadeClassifier(haar_file)
 
 
-labels = {0 : 'angry', 1 : 'disgust', 2 : 'fear', 3 : 'happy', 4 : 'neutral', 5 : 'sad', 6 : 'surprise'}
+labels = {0 : 'angry', 1 : 'happy', 2 : 'neutral', 3 : 'sad', 4 : 'tired'}
 count_emotions = {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'angry': 0, 'disgust': 0, 'fear': 0, 'happy': 0, 'neutral': 0, 'sad': 0, 'surprise': 0}
 
 webcam=cv2.VideoCapture(0)
@@ -44,8 +44,8 @@ def getRecog():
                         count_emotions[prediction_label] = c
                     else:
                         count_emotions[labels[i]] = 0
-                # print(count_emotions)
-                # print("Predicted Output:", prediction_label)
+                print(count_emotions)
+                print("Predicted Output:", prediction_label)
                 cv2.putText(im, '% s' %(prediction_label), (p-10, q-10),cv2.FONT_HERSHEY_COMPLEX_SMALL,2, (0,0,255))
             cv2.imshow("Output",im)
             cv2.waitKey(27)
@@ -61,3 +61,9 @@ def getcount_emotionsarray():
     return [count_emotions['angry'], count_emotions['disgust'], count_emotions['fear'],
             count_emotions['happy'], count_emotions['neutral'], count_emotions['sad'], 
             count_emotions['surprise']]
+
+
+def test():
+    getRecog()
+
+test()
