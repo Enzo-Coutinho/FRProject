@@ -14,8 +14,8 @@ haar_file=cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
 face_cascade=cv2.CascadeClassifier(haar_file)
 
 
-labels = {0 : 'angry', 1 : 'happy', 2 : 'neutral', 3 : 'sad', 4 : 'tired'}
-count_emotions = {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'happy': 0, 'angry': 0, 'neutral': 0, 'sad': 0, 'tired': 0, 
+labels = {0 : 'angry', 1 : 'happy', 2 : 'neutral', 3 : 'sad', 4 : 'fatigue'}
+count_emotions = {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'happy': 0, 'angry': 0, 'neutral': 0, 'sad': 0, 'fatigue': 0, 
                   'r': 0, 'g': 0, 'b': 0}
 MAX_PEOPLE = 1
 
@@ -68,3 +68,5 @@ def getcount_emotionsarray():
 
 def test():
     getRecog()
+
+test()
