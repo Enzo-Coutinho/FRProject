@@ -68,5 +68,3 @@ def getcount_emotionsarray():
 
 def test():
     getRecog()
-
-test()
