@@ -50,16 +50,18 @@ color = viewcolor.create_oval(const.Circle.circle[const.X], const.Circle.circle[
                               const.Circle.circle[const.XF], const.Circle.circle[const.YF], 
                               fill=const.Circle.color)
 
-select_image = tk.PhotoImage(file=r"C:\Users\enzoc\Documents\FRProject\apps\imagens\select.png")
-select = tk.Canvas(root, width = 400, 
-                 height = 200, background="#E6E2D6", highlightthickness=0)
-select.create_image(200, 100, image=select_image)
+select_image = tk.PhotoImage(file=const.Select.CAMINHO)
+select = tk.Canvas(root, width=const.Select.TAMANHO[const.X], 
+                 height=const.Select.TAMANHO[const.Y], 
+                 background=const.Select.COLOR, highlightthickness=0)
+select.create_image(const.Select.TAMANHO_IMAGEM[const.X], const.Select.TAMANHO_IMAGEM[const.Y], 
+                    image=select_image)
 select.pack(side=tk.BOTTOM)
 
-follow_image = tk.PhotoImage(file=r"C:\Users\enzoc\Documents\FRProject\apps\imagens\follower.png")
-follow = tk.Button(root, image=follow_image, highlightthickness=0, bd=0, background="#FFAA39", 
-                   command=seguir)
-follow.place(x=270, y=145)
+follow_image = tk.PhotoImage(file=const.Follow.CAMINHO)
+follow = tk.Button(root, image=follow_image, highlightthickness=0, bd=0, 
+                   background=const.Follow.COLOR, command=seguir)
+follow.place(x=const.Follow.POSICAO[const.X], y=const.Follow.POSICAO[const.Y])
 
 manual_image = tk.PhotoImage(file=r"C:\Users\enzoc\Documents\FRProject\apps\imagens\manual.png")
 manualButton = tk.Button(root, image=manual_image, highlightthickness=0, bd=0, background="#FFAA39",

@@ -18,4 +18,14 @@ class View:
 class Circle:
     circle = [125, 90, 225, 190]
     color = "#FFAA39"
-    
+
+class Select:
+    CAMINHO = "apps\\imagens\\select.png"
+    TAMANHO = [400, 200]
+    COLOR = "#E6E2D6"
+    TAMANHO_IMAGEM = [200, 100]
+
+class Follow:
+    CAMINHO = "apps\\imagens\\follower.png"
+    COLOR = "#FFAA39"
+    POSICAO = [270, 145]
