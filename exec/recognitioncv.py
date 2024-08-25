@@ -2,15 +2,25 @@ import cv2
 from keras.models import model_from_json
 import numpy as np
 from datetime import datetime
+import time
+import os
 
+files = [f for f in os.listdir() if os.path.isdir(f)]
+path = ""
+if "_internal" in files:
+    path = os.path.abspath("_internal")
+
+
+sair = False
 # from keras_preprocessing.image import load_img
-json_file = open("emotiondetector.json", "r")
+json_file = open(os.path.join(path, "emotiondetector.json"), "r")
 model_json = json_file.read()
 json_file.close()
 model = model_from_json(model_json)
 
-model.load_weights("emotiondetector.h5")
-haar_file=cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+model.load_weights(os.path.join(path, "emotiondetector.h5"))
+haar_file=os.path.join(path, "haarcascade_frontalface_default.xml")
+print(haar_file)
 face_cascade=cv2.CascadeClassifier(haar_file)
 
 
@@ -20,15 +30,15 @@ count_emotions = {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'happy':
 MAX_PEOPLE = 1
 
 
-webcam=cv2.VideoCapture(0)
-
 def extract_features(image):
     feature = np.array(image)
     feature = feature.reshape(1,48,48,1)
     return feature/255.0
 
+
 def getRecog():
-    while True:
+    webcam=cv2.VideoCapture(0)
+    while not sair:
         i,im=webcam.read()
         gray=cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
         faces=face_cascade.detectMultiScale(im,1.3,5)
@@ -53,7 +63,9 @@ def getRecog():
             cv2.imshow("Output",im)
             cv2.waitKey(27)
         except cv2.error:
-            pass
+            print("error")
+        time.sleep(0.01)
+    cv2.destroyAllWindows()
 
 
 def getcount_emotions():
@@ -65,6 +77,14 @@ def getcount_emotionsarray():
             count_emotions['happy'], count_emotions['neutral'], count_emotions['sad'], 
             count_emotions['surprise']]
 
+def stop():
+    global sair
+    sair = True
+
+
+def open():
+    global sair
+    sair = False
 
 def test():
     getRecog()

@@ -1,0 +1,113 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "C:/Users/enzoc/Documents/FRProject/exec/app.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": false
+  },
+  {
+   "optionDest": "console",
+   "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/enzoc/Downloads/logo.ico"
+  },
+  {
+   "optionDest": "name",
+   "value": "FocusLight"
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "disable_windowed_traceback",
+   "value": false
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": false
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "argv_emulation",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/enzoc/Documents/FRProject/exec/imagens;imagens/"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "opencv-python"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/enzoc/Documents/FRProject/exec/constants.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/enzoc/Documents/FRProject/exec/esp32serial.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/enzoc/Documents/FRProject/exec/recognitioncv.py;."
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "cv2"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "keras"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "tensorflow"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/enzoc/Documents/FRProject/emotiondetector.json;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/enzoc/Documents/FRProject/emotiondetector.h5;."
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "serial"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/enzoc/Documents/FRProject/haarcascade_frontalface_default.xml;."
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}
