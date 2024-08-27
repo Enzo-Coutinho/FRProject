@@ -13,7 +13,6 @@ class Esp32():
 
     def sendmessage(self, message):
         self.esp32.write(bytes((json.dumps(message).encode())))
-        print(str.replace((str)(self.getter()), r"\r\n", ""))
         self.esp32.flush()
 
     def close(self):
