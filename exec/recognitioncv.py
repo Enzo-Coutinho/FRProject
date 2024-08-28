@@ -10,7 +10,7 @@ path = ""
 if "_internal" in files:
     path = os.path.abspath("_internal")
 
-
+print(path)
 sair = False
 # from keras_preprocessing.image import load_img
 json_file = open(os.path.join(path, "emotiondetector.json"), "r")

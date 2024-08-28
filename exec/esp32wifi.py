@@ -19,4 +19,4 @@ def getemote():
     return emotions
 
 def initserver():
-   esp32wifi.run()  
+   esp32wifi.run(host='0.0.0.0')  

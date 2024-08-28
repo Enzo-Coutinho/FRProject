@@ -3,6 +3,7 @@ import threading
 import constants as const
 import recognitioncv
 import esp32serial
+import esp32wifi
 from tkinter import messagebox
 import os
 
@@ -183,7 +184,7 @@ def sendColorToESP():
     while True:
         emotions = recognitioncv.getcount_emotions()
         message = equation(emotions=emotions, mode=colorMode)
-        esp32.sendmessage(message=message)
+        esp32wifi.setemotions(emotes=message)
 
 
 def equation(emotions, mode):
@@ -233,7 +234,7 @@ def equation(emotions, mode):
 
 def initComm():
     try:
-        esp32.open()
+        #esp32.open()
         recognitioncv.open()
         getExpressionThread = threading.Thread(target=recognitioncv.getRecog, daemon=True)
         getExpressionThread.start()
@@ -254,4 +255,7 @@ buttoncomm = tk.Button(root, text="Init", command=initComm)
 buttoncomm.place(x=10, y=10)
 buttonstop = tk.Button(root, text="Stop", command=stopAll)
 buttonstop.place(x=50, y=10)
+
+threading.Thread(target=esp32wifi.initserver, daemon=True).start()
+
 root.mainloop()
