@@ -1,8 +1,13 @@
 from flask import Flask
+import time
 
 emotions = {}
 
 esp32wifi = Flask(__name__)
+
+
+def initserver():
+   esp32wifi.run(host='0.0.0.0')  
 
 
 def setemotions(emotes):
@@ -18,5 +23,3 @@ def hello_world():
 def getemote():
     return emotions
 
-def initserver():
-   esp32wifi.run(host='0.0.0.0')  

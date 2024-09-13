@@ -2,9 +2,9 @@ import tkinter as tk
 import threading
 import constants as const
 import recognitioncv
-import esp32serial
 import esp32wifi
 from tkinter import messagebox
+import time
 import os
 
 
@@ -17,7 +17,6 @@ if "_internal" in files:
     abspath = os.path.abspath("_internal\\imagens")
     print(abspath)
 
-esp32 = esp32serial.Esp32()
 
 def rgb_to_hex(emotions):
     return '#{:02x}{:02x}{:02x}'.format(emotions['r'], 
@@ -180,11 +179,14 @@ addButton.place(x=270, y=247)
 mode = tk.Label(root, text="None", fg="#FFAA39", font=("Roboto", 20), bg="#E6E2D6")
 mode.place(x=220, y=50)
 
+active = False
+
 def sendColorToESP():
-    while True:
+    while active:
         emotions = recognitioncv.getcount_emotions()
         message = equation(emotions=emotions, mode=colorMode)
         esp32wifi.setemotions(emotes=message)
+        
 
 
 def equation(emotions, mode):
@@ -233,23 +235,20 @@ def equation(emotions, mode):
     return emotions
 
 def initComm():
-    try:
-        #esp32.open()
+        global active
         recognitioncv.open()
+        active = True
         getExpressionThread = threading.Thread(target=recognitioncv.getRecog, daemon=True)
         getExpressionThread.start()
         sendColorToESPThread = threading.Thread(target=sendColorToESP, daemon=True)
         sendColorToESPThread.start()
-    except esp32serial.serial.SerialException:
-        messagebox.showerror("Error", "Iluminação não conectada!")
 
 
 def stopAll():
-    try:
-        esp32.close()
+        global active
+        active = False
         recognitioncv.stop()
-    except AttributeError:
-        messagebox.showerror("Error", "Não é possível utilizar esse comando no momento!")
+
 
 buttoncomm = tk.Button(root, text="Init", command=initComm)
 buttoncomm.place(x=10, y=10)
