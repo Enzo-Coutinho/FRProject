@@ -5,6 +5,7 @@ import recognitioncv
 import esp32wifi
 from tkinter import messagebox
 import time
+import json
 import os
 
 
@@ -50,6 +51,65 @@ def add():
     colorMode = "Add"
     mode.config(text="Add")
 
+class WindowList(tk.Toplevel):
+
+    def __init__(self, master=None):
+        super().__init__(master=master)
+        self.title("Context")
+        self.geometry("300x300")
+        self.contextList = tk.Listbox(self, selectmode=tk.SINGLE)
+        self.nameContext = tk.Text(self, width=10, height=1)
+        self.redBox = tk.Spinbox(self, from_=0, to=255, fg="red", width=5)
+        self.greenBox = tk.Spinbox(self, from_=0, to=255, fg="green", width=5)
+        self.blueBox = tk.Spinbox(self, from_=0, to=255, fg="blue", width=5)
+        self.addButton = tk.Button(self, text="Add", command=self.addContext)
+        self.removeButton = tk.Button(self, text="Remove", command=self.removeContext)
+        self.wm_protocol(name="WM_DELETE_WINDOW", func=self.close)
+        with open("exec\\context.json", "r") as file:
+            self.context = json.load(file)
+        c = 0
+        for i in self.context:
+            self.contextList.insert(c, i)
+            c += 1
+        self.contextList.pack(pady=8)
+        self.nameContext.pack()
+        self.redBox.place(x=80, y=220)
+        self.greenBox.place(x=130, y=220)
+        self.blueBox.place(x=180, y=220)
+        self.addButton.place(x=240, y=260)
+        self.removeButton.place(x=175, y=260)
+
+    def addContext(self):
+        color = {"r": int(self.redBox.get()), "g": int(self.greenBox.get()), "b": int(self.blueBox.get())}
+        name = self.nameContext.get(1.0, "end-1c")
+        self.context[name] = color
+        json_file = json.dumps(self.context)
+        with open("exec\\context.json", "w") as file:
+            file.write(json_file)
+
+
+    def removeContext(self):
+        if self.active:
+            self.context.pop(self.getSelection())
+            with open("exec\\context.json", "w") as file:
+                json_file = json.dumps(self.context)
+                file.write(json_file)
+
+
+    def getSelection(self):
+        return self.contextList.get(self.contextList.curselection())
+    
+
+    def active(self):
+        return self.contextList.curselection() != ()
+    
+        
+    def close(self):
+        global colorModeManual
+        colorModeManual = ""
+        self.destroy()
+
+
 
 class WindowRGB(tk.Toplevel):
 
@@ -91,7 +151,7 @@ class Select(tk.Toplevel):
         self.resizable(False, False)
         self.buttonRGB = tk.Button(self, text="RGB", command=self.openRGB)
         self.buttonYellow = tk.Button(self, text="Yellow", command=self.openYellow)
-        self.list = tk.Button(self, text="List")
+        self.list = tk.Button(self, text="List", command=self.openList)
         self.list.pack(side=tk.TOP, pady=35)
         self.buttonRGB.pack(side=tk.TOP, pady=35)
         self.buttonYellow.pack(side=tk.TOP, pady=35)
@@ -110,6 +170,13 @@ class Select(tk.Toplevel):
         manualRGB = WindowRGB()
         global colorModeManual
         colorModeManual = "rgb"
+
+    def openList(self):
+        self.destroy()
+        global manualList
+        manualList = WindowList()
+        global colorModeManual
+        colorModeManual = "list"
 
 class manualWindow(tk.Toplevel):
 
@@ -229,7 +296,14 @@ def equation(emotions, mode):
             except:
                 pass
         elif colorModeManual == "list":
-            pass
+            if manualList.active():
+                contextSelect = manualList.getSelection()
+                try:
+                    emotions['r'] = manualList.context[contextSelect]['r']
+                    emotions['g'] = manualList.context[contextSelect]['g']
+                    emotions['b'] = manualList.context[contextSelect]['b']
+                except KeyError:
+                    pass
     global viewcolor
     viewcolor.itemconfig(color, fill=rgb_to_hex(emotions))
     return emotions
