@@ -97,7 +97,10 @@ class WindowList(tk.Toplevel):
 
 
     def getSelection(self):
-        return self.contextList.get(self.contextList.curselection())
+        try:
+            return self.contextList.get(self.contextList.curselection())
+        except:
+            pass
     
 
     def active(self):
@@ -135,8 +138,10 @@ class WindowRGB(tk.Toplevel):
         self.wm_protocol(name="WM_DELETE_WINDOW", func=self.close)
 
     def getRGBValue(self):
-        return [self.sliderR.get(), self.sliderG.get(), self.sliderB.get()]
-    
+        try:
+            return [self.sliderR.get(), self.sliderG.get(), self.sliderB.get()]
+        except:
+            pass
     def close(self):
         self.destroy()
         global colorModeManual
@@ -191,8 +196,10 @@ class manualWindow(tk.Toplevel):
         
 
     def getYellowValue(self):
-        return self.yellowSlider.get()
-
+        try:
+            return self.yellowSlider.get()
+        except:
+            pass
       
     def close(self):
         global colorModeManual
