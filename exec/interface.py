@@ -84,14 +84,14 @@ class WindowList(tk.Toplevel):
         name = self.nameContext.get(1.0, "end-1c")
         self.context[name] = color
         json_file = json.dumps(self.context)
-        with open("exec\\context.json", "w") as file:
+        with open("_internal\\context.json", "w") as file:
             file.write(json_file)
 
 
     def removeContext(self):
         if self.active:
             self.context.pop(self.getSelection())
-            with open("exec\\context.json", "w") as file:
+            with open("_internal\\context.json", "w") as file:
                 json_file = json.dumps(self.context)
                 file.write(json_file)
 
@@ -255,12 +255,12 @@ mode.place(x=220, y=50)
 
 active = False
 
+
 def sendColorToESP():
     while active:
         emotions = recognitioncv.getcount_emotions()
         message = equation(emotions=emotions, mode=colorMode)
         esp32wifi.setemotions(emotes=message)
-        
 
 
 def equation(emotions, mode):
@@ -286,9 +286,9 @@ def equation(emotions, mode):
             emotions['g'] = 0
             emotions ['b'] = 255
     elif mode == "Add":
-        emotions['r'] = (int)(220 + ((emotions['angry'] + emotions['sad']) * (35/MAX_PEOPLE)))
-        emotions['g'] = (int)(220 + ((emotions['neutral'] + emotions['happy']) * (35/MAX_PEOPLE)))
-        emotions['b'] = (int)(220 + (emotions['fatigue'] * (35/MAX_PEOPLE)))
+        emotions['r'] = (int)(200 + ((emotions['angry'] + emotions['sad']) * (55/MAX_PEOPLE)))
+        emotions['g'] = (int)(200 + ((emotions['neutral'] + emotions['happy']) * (55/MAX_PEOPLE)))
+        emotions['b'] = (int)(200 + (emotions['fatigue'] * (55/MAX_PEOPLE)))
     elif mode == "Manual":
         global colorModeManual
         if colorModeManual == "yellow":
@@ -314,6 +314,7 @@ def equation(emotions, mode):
     global viewcolor
     viewcolor.itemconfig(color, fill=rgb_to_hex(emotions))
     return emotions
+
 
 def initComm():
         global active
